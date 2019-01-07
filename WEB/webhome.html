@@ -26,6 +26,9 @@
     <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#menu2">分配数据</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#menu3">启动crawler</a>
+    </li>
 </ul>
 
 <div class="tab-content">
@@ -65,6 +68,16 @@
                 </div>
             </div>
             <div class="form-group"></div>
+        </form>
+    </div>
+    <div class="tab-pane fade container" id="menu3">
+        <form class="form-horizontal" id="crawlerStart">
+            <div class="form-group custom-control-inline">
+                <label for="assignPath" class="col-sm-8 control-label">启动crawler：</label>
+                <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary">启动</button>
+                </div>
+            </div>
         </form>
     </div>
 </div>
@@ -123,6 +136,20 @@
             dataType: "json",
             success: function () {
                 alert("分配成功");
+            }
+        });
+    });
+
+    $('#crawlerStart').on('submit', function () {
+        $.ajax({
+            url: "http://localhost:8090/v1/crawler/start",
+            type: "POST",
+            cache: false,
+            async: false,
+            contentType: "application/json",
+            dataType: "json",
+            success: function () {
+                alert("启动成功");
             }
         });
     });
