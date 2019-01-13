@@ -109,8 +109,12 @@
             async: false,
             contentType: "application/json",
             dataType: "json",
-            success: function () {
-                alert("解析成功");
+            success: function (data) {
+                if (data.code !== 0) {
+                    alert(data.message);
+                } else {
+                    alert("解析成功");
+                }
             }
         });
     });
@@ -181,7 +185,7 @@
 
     $(function () {
         var employee = {};
-        var crawler_date = {};
+        var crawler_param = {};
 
         $.ajax({
             url: "http://localhost:8090/v1/employee/findAll",
@@ -200,13 +204,13 @@
             cache: false,
             async: false,
             success: function (data) {
-                crawler_date = data;
+                crawler_param = data;
             }
         });
 
         $.each(employee, function () {
             var str = '    <div class="form-group custom-control-inline">\n' +
-                '        <label for="employee" class="col-sm-5 control-label">' + this.name+ ':</label>\n' +
+                '        <label for="employee" class="col-sm-5 control-label">' + this.name + ':</label>\n' +
                 '    <div class="col-sm-10">\n' +
                 '        <input type="number" class="form-control" id="employee" name="' + this.name + '">\n' +
                 '        </div>\n' +
@@ -219,11 +223,19 @@
             '            </div>'
         );
 
-        $('#crawlerDate').append('            <div class="form-group custom-control-inline">\n' +
-            '                <label for="crawler_date" class="col-sm-4 control-label">crawler抓取日期</label>\n' +
+        $('#crawlerDate').append(
+            '                <div class="form-group custom-control-inline">\n' +
+            '                <label for="crawler_date" class="col-sm-6 control-label">crawler抓取日期</label>\n' +
             '                <div class="col-sm-10">\n' +
-            '                    <input type="text" class="form-control" id="crawler_date" name="crawler_date" placeholder="' + crawler_date + '">\n' +
+            '                    <input type="text" class="form-control" id="crawler_date" name="crawler_date" placeholder="' + crawler_param.crawler_date + '">\n' +
             '                </div>\n' +
+            '                </div>\n<div class="form-group"></div>\n' +
+            '                <div class="form-group custom-control-inline">\n' +
+            '                <label for="crawler_num" class="col-sm-6 control-label">crawler每日抓取数量</label>\n' +
+            '                <div class="col-sm-10">\n' +
+            '                    <input type="text" class="form-control" id="crawler_num" name="crawler_num" placeholder="' + crawler_param.crawler_num + '">\n' +
+            '                </div>\n' +
+            '                </div>\n<div class="form-group"></div>\n' +
             '                <div class="col-sm-10">\n' +
             '                    <button type="submit" class="btn btn-primary">保存</button>\n' +
             '                </div>\n' +
